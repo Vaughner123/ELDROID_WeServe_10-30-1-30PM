@@ -71,7 +71,7 @@ public class SignUp extends AppCompatActivity {
                         if (user != null) {
                             String fullName = firstName + " " + lastName;
 
-                            // Update the user's display name in Firebase
+                            
                             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                     .setDisplayName(fullName)
                                     .build();
@@ -80,7 +80,7 @@ public class SignUp extends AppCompatActivity {
                                         if (profileUpdateTask.isSuccessful()) {
                                             Toast.makeText(SignUp.this, "Registration successful!", Toast.LENGTH_SHORT).show();
 
-                                            // Redirect to main activity or login activity
+                                            
                                             finish();  // Close sign-up activity
                                         }
                                     });
