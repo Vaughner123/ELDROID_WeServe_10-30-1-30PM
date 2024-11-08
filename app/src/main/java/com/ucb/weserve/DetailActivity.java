@@ -9,13 +9,13 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail); // Ensure this layout exists
+        setContentView(R.layout.activity_detail); 
 
-        // Get the data passed from the History activity
+       
         String selectedItem = getIntent().getStringExtra("selectedItem");
 
-        // Display the selected item in a TextView
-        TextView textView = findViewById(R.id.text_view_detail); // Ensure this ID matches your layout
+        
+        TextView textView = findViewById(R.id.text_view_detail); 
         textView.setText(selectedItem);
     }
 }
