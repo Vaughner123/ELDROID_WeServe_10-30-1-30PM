@@ -18,7 +18,7 @@ public class History extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.history_layout); // Ensure this matches your layout file name
+        setContentView(R.layout.history_layout); 
 
         
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -41,7 +41,7 @@ public class History extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Handle the item click
+               
                 String selectedItem = names.get(position);
                 Intent intent = new Intent(History.this, DetailActivity.class); // Replace with your detail activity
                 intent.putExtra("selectedItem", selectedItem); // Pass data to the next activity
@@ -55,24 +55,24 @@ public class History extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.navigation_home) {
                     startActivity(new Intent(History.this, Dashboard.class));
-                    finish(); // Optional: Finish History
+                    finish(); 
                     return true;
                 } else if (menuItem.getItemId() == R.id.navigation_history) {
-                    return true; // Stay on History
+                    return true; 
                 } else if (menuItem.getItemId() == R.id.navigation_post) {
                     startActivity(new Intent(History.this, Post.class));
-                    finish(); // Optional: Finish History
+                    finish(); 
                     return true;
                 } else if (menuItem.getItemId() == R.id.navigation_events) {
                     startActivity(new Intent(History.this, Events.class));
-                    finish(); // Optional: Finish History
+                    finish(); 
                     return true;
                 } else if (menuItem.getItemId() == R.id.navigation_profile) {
                     startActivity(new Intent(History.this, Profile.class));
-                    finish(); // Optional: Finish History
+                    finish(); 
                     return true;
                 } else {
-                    return false; // Return false if no valid menu item was selected
+                    return false; 
                 }
             }
         });
