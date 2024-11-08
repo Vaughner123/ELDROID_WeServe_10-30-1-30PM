@@ -21,29 +21,29 @@ public class Events extends AppCompatActivity {
     private EditText eventName;
     private EditText eventAddress;
     private EditText eventDescription;
-    private ImageView eventImage; // If you want to display the image selected
-    private Uri imageUri; // Variable to store the image URI (to be set when selecting an image)
+    private ImageView eventImage; 
+    private Uri imageUri; 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.events_layout); // Ensure this matches your layout file name
+        setContentView(R.layout.events_layout); 
 
-        // Initialize views
+        
         addPostButton = findViewById(R.id.addPostButton);
         eventName = findViewById(R.id.eventName);
         eventAddress = findViewById(R.id.eventAddress);
         eventDescription = findViewById(R.id.eventDescription);
-        eventImage = findViewById(R.id.eventImage); // If you want to display the selected image
+        eventImage = findViewById(R.id.eventImage); 
 
-        // Initialize bottom navigation
+      
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        // Set up the navigation item selected listener
+        
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                // Using if-else statements
+                
                 if (menuItem.getItemId() == R.id.navigation_home) {
                     startActivity(new Intent(Events.this, Dashboard.class));
                     finish();
@@ -57,19 +57,19 @@ public class Events extends AppCompatActivity {
                     finish();
                     return true;
                 } else if (menuItem.getItemId() == R.id.navigation_events) {
-                    // Stay on Events, no action needed
-                    return true; // Return true as it's the current activity
+                   
+                    return true; 
                 } else if (menuItem.getItemId() == R.id.navigation_profile) {
                     startActivity(new Intent(Events.this, Profile.class));
                     finish();
                     return true;
                 } else {
-                    return false; // Return false if no valid menu item was selected
+                    return false; 
                 }
             }
         });
 
-        // Set OnClickListener for addPostButton
+        
         addPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,13 +80,13 @@ public class Events extends AppCompatActivity {
                 if (name.isEmpty() || address.isEmpty() || description.isEmpty() || imageUri == null) {
                     Toast.makeText(Events.this, "Please fill in all fields and select an image", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Create intent to start DashboardActivity
+                    
                     Intent intent = new Intent(Events.this, Dashboard.class);
                     intent.putExtra("EVENT_NAME", name);
                     intent.putExtra("EVENT_ADDRESS", address);
                     intent.putExtra("EVENT_DESCRIPTION", description);
-                    // Optional: Pass the image URI if needed
-                    // intent.putExtra("EVENT_IMAGE", imageUri.toString());
+                    
+                    
                     startActivity(intent);
                 }
             }
