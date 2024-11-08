@@ -20,24 +20,24 @@ public class History extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history_layout); // Ensure this matches your layout file name
 
-        // Initialize bottom navigation
+        
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         ListView listView = findViewById(R.id.history_listview);
 
-        // Set the selected item to History
+        
         bottomNavigationView.setSelectedItemId(R.id.navigation_history);
 
-        // Sample data for the ListView
+        
         ArrayList<String> names = new ArrayList<>();
         names.add("John Doe - Description 1");
         names.add("Jane Smith - Description 2");
         names.add("Sam Wilson - Description 3");
 
-        // Create an ArrayAdapter
+       
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, names);
         listView.setAdapter(adapter);
 
-        // Set up item click listener for the ListView
+       
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -49,7 +49,7 @@ public class History extends AppCompatActivity {
             }
         });
 
-        // Set up the navigation item selected listener using if-else
+        
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
