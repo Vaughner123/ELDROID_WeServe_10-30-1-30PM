@@ -23,7 +23,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_layout);  // Make sure this matches the name of your XML layout
+        setContentView(R.layout.login_layout);  
 
         mAuth = FirebaseAuth.getInstance();
         emailEditText = findViewById(R.id.email);
@@ -31,10 +31,10 @@ public class Login extends AppCompatActivity {
         loginButton = findViewById(R.id.login_button);
         signUpLink = findViewById(R.id.signup_link);
 
-        // Login button click listener
+        
         loginButton.setOnClickListener(view -> logInUser());
 
-        // Sign-up link click listener
+        
         signUpLink.setOnClickListener(view -> {
             // Redirect to the sign-up activity
             startActivity(new Intent(Login.this, SignUp.class));
@@ -45,7 +45,7 @@ public class Login extends AppCompatActivity {
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
-        // Validate email and password
+        
         if (TextUtils.isEmpty(email)) {
             emailEditText.setError("Email is required.");
             return;
@@ -55,14 +55,14 @@ public class Login extends AppCompatActivity {
             return;
         }
 
-        // Firebase authentication for login
+        
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         Toast.makeText(Login.this, "Login successful", Toast.LENGTH_SHORT).show();
 
-                        // Redirect to main activity (or any other activity)
+                        
                         Intent intent = new Intent(Login.this, Login.class);
                         startActivity(intent);
                         finish();
