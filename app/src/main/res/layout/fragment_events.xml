@@ -1,0 +1,21 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EventsFragment"
+    app:background="@color/white">
+
+
+    <TextView
+        android:id="@+id/text_events"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Events Fragment"
+        android:textSize="18sp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Remove any additional Toolbars or unnecessary UI components -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
