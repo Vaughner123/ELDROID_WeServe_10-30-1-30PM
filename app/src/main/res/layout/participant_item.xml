@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:background="@drawable/item_background"
+    android:layout_marginBottom="8dp">
+
+    <!-- Profile Image Placeholder -->
+    <ImageView
+        android:id="@+id/participant_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_user_placeholder"
+        android:contentDescription="Participant Image" />
+
+    <!-- Name -->
+    <TextView
+        android:id="@+id/participant_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Participant Name"
+        android:textSize="16sp"
+        android:textColor="#000000"
+        android:layout_gravity="center_vertical" />
+
+    <!-- Status Icon -->
+    <ImageView
+        android:id="@+id/status_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_check"
+        android:contentDescription="Status Icon" />
+</LinearLayout>
