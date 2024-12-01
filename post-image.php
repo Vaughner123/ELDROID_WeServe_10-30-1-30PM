@@ -14,15 +14,16 @@ if ($conn->connect_error) {
 // Set the allowed file types
 $allowedFileTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
-// Directory where you want to save the uploaded photos
-$uploadDir = 'uploads/';
+// Directory where the uploaded photos will go
+$uploadDir = 'post-images/'; 
 
 // Check if the 'file' input is present in the form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
+    
     // Get the uploaded file information
     $file = $_FILES['file'];
     
-    // Get file details
+
     $fileName = $file['name'];
     $fileTmpName = $file['tmp_name'];
     $fileSize = $file['size'];
@@ -42,12 +43,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
 
             // Move the uploaded file to the desired directory
             if (move_uploaded_file($fileTmpName, $uploadDir . $uniqueFileName)) {
-                // Respond with success
-                echo json_encode([
-                    'status' => 'success',
-                    'message' => 'File uploaded successfully.',
-                    'file_url' => $uploadDir . $uniqueFileName
-                ]);
+                // Insert file details into the database
+                $fileUrl = $uploadDir . $uniqueFileName;
+                $stmt = $conn->prepare("INSERT INTO `post-images` (file_name, file_type, file_size, file_url) VALUES (?, ?, ?, ?)");
+                $stmt->bind_param("ssis", $fileName, $fileType, $fileSize, $fileUrl);
+                
+                if ($stmt->execute()) {
+                    // Respond with success
+                    echo json_encode([
+                        'status' => 'success',
+                        'message' => 'File uploaded and saved to database successfully.',
+                        'file_url' => $fileUrl
+                    ]);
+                } else {
+                    // If database insert fails
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'Failed to save file details to the database.'
+                    ]);
+                }
+                $stmt->close();
             } else {
                 // If file move failed
                 echo json_encode([
@@ -78,4 +93,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
 
 $conn->close();
 ?>
-
