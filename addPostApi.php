@@ -11,13 +11,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Set the allowed file types
+// Set the allowed file typee
 $allowedFileTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
 // Directory where the uploaded photos will go
 $uploadDir = 'post-images/'; 
 
-// Check if the 'file' input is present in the form submission
+// Check if the file input is present in the form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file']) && isset($_POST['title']) && isset($_POST['content']) && isset($_POST['comment'])) {
     
     // Get the uploaded file information
