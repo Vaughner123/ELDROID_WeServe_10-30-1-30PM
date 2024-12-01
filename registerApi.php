@@ -12,16 +12,16 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
     // Get input data
     $input = json_decode(file_get_contents('php://input'), true);
 
     // Assign input data to variables
-    $name = $input['name'] ?? null;  // Nullable, defaults to null if not provided
-    $lastname = $input['lastname'] ?? null;  // Nullable
-    $email = $input['email'] ?? null;  // Nullable
-    $password = $input['password'] ?? null;  // Nullable
+    $name = $input['name'] ?? null;
+    $lastname = $input['lastname'] ?? null;  
+    $email = $input['email'] ?? null;  
+    $password = $input['password'] ?? null;  
 
-    // Check if any of the fields are empty
     if (empty($name) || empty($lastname) || empty($email) || empty($password)) {
         echo json_encode(["error" => "All fields are required."]);
         return;
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssss", $name, $lastname, $email, $hashed_password);
 
-    // Execute the query and check if the insertion was successful
+    // check if the insertion was successful
     if ($stmt->execute()) {
         echo json_encode(["message" => "Registration successful."]);
     } else {

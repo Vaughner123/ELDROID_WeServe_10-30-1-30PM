@@ -11,8 +11,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Process only POST requests
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     // Get input data
     $input = json_decode(file_get_contents('php://input'), true);
     $email = $input['email'] ?? null;
@@ -27,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Query to check user credentials
+    //check user credentials
     $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
     $stmt->bind_param("ss", $email, $password);
     $stmt->execute();
