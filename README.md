@@ -13,4 +13,4 @@ WeServe is a pioneering platform dedicated to enhancing community engagement and
 [WeServe Android Repository](https://github.com/Vaughner123/ELDROID_WeServe_10-30-1-30PM/new/WeServe?filename=README.md)
 
 ## Documentation Link
-[Project Documentation](https://docs.google.com/document/d/1dfDxTvRiG-4gKNpiB9bYKt391R0yeZsUxilEBj6apLw/edit?usp=sharing)
+[Project Documentation](https://docs.google.com/document/d/1LQJ6ZrTwSak-77Y5plpAPC2dFoOmbto_j_d_WiYidbw/edit?usp=sharing)
