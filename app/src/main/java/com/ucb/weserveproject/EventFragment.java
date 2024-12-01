@@ -1,10 +1,12 @@
 package com.ucb.weserveproject;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,23 +20,23 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-public class HistoryFragment extends Fragment {
+public class EventFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private HistoryPostAdapter historyPostAdapter;
+    private JoinedPostAdapter joinedPostAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.history_layout, container, false);
+        View view = inflater.inflate(R.layout.events_layout, container, false);
 
         recyclerView = view.findViewById(R.id.joined_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         ArrayList<PostData> joinedPosts = loadJoinedPostsFromPreferences();
 
-        historyPostAdapter = new HistoryPostAdapter(joinedPosts);
-        recyclerView.setAdapter(historyPostAdapter);
+        joinedPostAdapter = new JoinedPostAdapter(joinedPosts);
+        recyclerView.setAdapter(joinedPostAdapter);
 
         return view;
     }
@@ -59,10 +61,10 @@ public class HistoryFragment extends Fragment {
     }
 
     public static class PostData {
-        private final String eventName;
-        private final String address;
-        private final String description;
-        private final String imageUri;
+        String eventName;
+        String address;
+        String description;
+        String imageUri;
 
         public PostData(String eventName, String address, String description, String imageUri) {
             this.eventName = eventName;
@@ -70,54 +72,42 @@ public class HistoryFragment extends Fragment {
             this.description = description;
             this.imageUri = imageUri;
         }
-
-        public String getEventName() {
-            return eventName;
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public String getImageUri() {
-            return imageUri;
-        }
     }
 
-    public static class HistoryPostAdapter extends RecyclerView.Adapter<HistoryPostAdapter.HistoryPostViewHolder> {
+    public static class JoinedPostAdapter extends RecyclerView.Adapter<JoinedPostAdapter.JoinedPostViewHolder> {
 
         private final ArrayList<PostData> joinedPostDataList;
 
-        public HistoryPostAdapter(ArrayList<PostData> joinedPostDataList) {
+        public JoinedPostAdapter(ArrayList<PostData> joinedPostDataList) {
             this.joinedPostDataList = joinedPostDataList;
         }
 
         @NonNull
         @Override
-        public HistoryPostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_item_layout, parent, false);
-            return new HistoryPostViewHolder(itemView);
+        public JoinedPostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_item_layout, parent, false);
+            return new JoinedPostViewHolder(itemView);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull HistoryPostViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull JoinedPostViewHolder holder, int position) {
             PostData postData = joinedPostDataList.get(position);
 
-            holder.eventName.setText(postData.getEventName());
-            holder.address.setText(postData.getAddress());
-            holder.description.setText(postData.getDescription());
+            holder.eventName.setText(postData.eventName);
+            holder.address.setText(postData.address);
+            holder.description.setText(postData.description);
 
-            if (postData.getImageUri() != null && !postData.getImageUri().isEmpty()) {
+            if (postData.imageUri != null && !postData.imageUri.isEmpty()) {
                 Glide.with(holder.itemView.getContext())
-                        .load(postData.getImageUri())
+                        .load(postData.imageUri)
                         .into(holder.imageView);
             } else {
                 holder.imageView.setImageResource(R.drawable.settings_container); // Default image
             }
+
+            holder.cancelButton.setOnClickListener(v -> {
+                removeItem(position, holder.itemView.getContext());
+            });
         }
 
         @Override
@@ -125,16 +115,34 @@ public class HistoryFragment extends Fragment {
             return joinedPostDataList.size();
         }
 
-        public static class HistoryPostViewHolder extends RecyclerView.ViewHolder {
+        private void removeItem(int position, Context context) {
+            PostData postData = joinedPostDataList.get(position);
+
+            SharedPreferences sharedPreferences = context.getSharedPreferences("JoinedPosts", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            String keyToRemove = "joined_post_" + postData.eventName; // Example key format
+            editor.remove(keyToRemove);
+            editor.apply();
+
+            joinedPostDataList.remove(position);
+
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, joinedPostDataList.size());
+        }
+
+        public static class JoinedPostViewHolder extends RecyclerView.ViewHolder {
             TextView eventName, address, description;
             ImageView imageView;
+            ImageButton cancelButton;
 
-            public HistoryPostViewHolder(View itemView) {
+            public JoinedPostViewHolder(View itemView) {
                 super(itemView);
                 eventName = itemView.findViewById(R.id.joined_event_name);
                 address = itemView.findViewById(R.id.joined_event_address);
                 description = itemView.findViewById(R.id.joined_event_description);
                 imageView = itemView.findViewById(R.id.joined_event_image);
+                cancelButton = itemView.findViewById(R.id.cancel_button);
             }
         }
     }

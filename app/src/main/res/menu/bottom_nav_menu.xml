@@ -1,23 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Dashboard Item -->
     <item
-        android:id="@+id/nav_dashboard"
+        android:id="@+id/navigation_dashboard"
         android:icon="@drawable/home_svgrepo_com"
         android:title="Dashboard" />
+
+    <!-- Events Item -->
     <item
-        android:id="@+id/nav_events"
+        android:id="@+id/navigation_events"
         android:icon="@drawable/events_svgrepo_com"
         android:title="Events" />
+
+    <!-- Post Item -->
     <item
-        android:id="@+id/nav_post"
+        android:id="@+id/navigation_post"
         android:icon="@drawable/add_square_svgrepo_com"
         android:title="Post" />
+
+    <!-- History Item -->
     <item
-        android:id="@+id/nav_history"
+        android:id="@+id/navigation_history"
         android:icon="@drawable/history_svgrepo_com__1_"
         android:title="History" />
+
+    <!-- Profile Item -->
     <item
-        android:id="@+id/nav_profile"
+        android:id="@+id/navigation_profile"
         android:icon="@drawable/profile_circle_svgrepo_com"
         android:title="Profile" />
 </menu>

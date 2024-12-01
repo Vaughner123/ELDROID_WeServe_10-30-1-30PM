@@ -1,0 +1,40 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#FFFFFF"
+    android:padding="24dp"
+    >
+
+    <TextView
+        android:id="@+id/tvAppName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WeServe"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="#A7D9A2"
+        android:layout_marginBottom="24dp" />
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:textColorHint="@color/black"
+        android:textColor="@color/black"
+        android:hint="Enter your email"
+        android:background="@drawable/round_edittext"
+        android:padding="12dp"
+        android:layout_marginBottom="20dp"
+        android:inputType="textEmailAddress" />
+
+    <Button
+        android:id="@+id/btnResetPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:backgroundTint="#A7D9A2"
+        android:text="Reset Password ➔"
+        android:textColor="#FFFFFF" />
+</LinearLayout>

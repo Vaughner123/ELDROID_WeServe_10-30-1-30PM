@@ -3,6 +3,13 @@
     <style name="Base.Theme.WeServeProject" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+            <item name="colorPrimary">@android:color/white</item>
+            <item name="colorPrimaryVariant">@android:color/white</item>
+            <item name="colorOnPrimary">@android:color/black</item>
+            <item name="colorButtonNormal">@android:color/white</item> <!-- Ensures default button background -->
+
+
     </style>
 
     <style name="Theme.WeServeProject" parent="Base.Theme.WeServeProject" />
