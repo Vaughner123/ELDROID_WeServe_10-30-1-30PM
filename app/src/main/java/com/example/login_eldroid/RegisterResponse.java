@@ -5,6 +5,7 @@ public class RegisterResponse {
     private String message;
     private UserData user;
 
+    // Constructor
     public RegisterResponse(boolean success, String message, UserData user) {
         this.success = success;
         this.message = message;

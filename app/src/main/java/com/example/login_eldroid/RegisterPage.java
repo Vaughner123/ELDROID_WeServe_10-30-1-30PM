@@ -17,6 +17,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.login_eldroid.LoginRequest;
+import com.example.login_eldroid.LoginResponse;
+
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -80,18 +84,18 @@ public class RegisterPage extends AppCompatActivity {
                         // Handle successful login (For example, move to another screen or show a success message)
                         Toast.makeText(RegisterPage.this, "Register successful", Toast.LENGTH_SHORT).show();
                         // Proceed to the next screen or perform further actions like saving the token
-//                        Intent intent = new Intent(RegisterPage.this, MainActivity.class); // Assuming HomePage is the next activity
-//                        startActivity(intent);  // Start HomePage activity
+                        Intent intent = new Intent(RegisterPage.this, LoginPage.class); // Assuming HomePage is the next activity
+                        startActivity(intent);  // Start HomePage activity
 
                         // Optional: Finish current activity to prevent returning to login screen when pressing back
                         finish();
 
                     } else {
-                        tvError.setText("Invalid credentials");
+                        tvError.setText("Lacking credentials");
                         tvError.setVisibility(View.VISIBLE);
                     }
                 } else {
-                    tvError.setText("Login failed. Try again.");
+                    tvError.setText("Register failed. Try again.");
                     Log.d("RegisterPage", "Register failed: " + response.toString() + response.code() + response.message());
                     tvError.setVisibility(View.VISIBLE);
                 }
