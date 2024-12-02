@@ -11,13 +11,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Set the allowed file types
+// Set the allowed file typee
 $allowedFileTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
 // Directory where the uploaded photos will be save
 $uploadDir = 'post-images/'; 
 
-// Check if the 'file' input is present in the form submission
+// Check if the file input is present in the form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file']) && isset($_POST['title']) && isset($_POST['content']) && isset($_POST['comment'])) {
     
     // Get the uploaded file information
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file']) && isset($_P
     if (in_array($fileType, $allowedFileTypes)) {
         // Check if there was any error during the upload
         if ($file['error'] === UPLOAD_ERR_OK) {
-            // Ensure the upload directory exists
+            // Ensure the upload directory exists 
             if (!file_exists($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }
@@ -50,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file']) && isset($_P
                 $fileUrl = $uploadDir . $uniqueFileName;
                 $stmt = $conn->prepare("INSERT INTO `addPost` (title, content, comment, file_name, file_type, file_size, file_url) VALUES (?, ?, ?, ?, ?, ?, ?)");
                 $stmt->bind_param("ssssiss", $title, $content, $comment, $fileName, $fileType, $fileSize, $fileUrl);
+                //s = string data type while i = int data type
                 
                 if ($stmt->execute()) {
                     echo json_encode([
