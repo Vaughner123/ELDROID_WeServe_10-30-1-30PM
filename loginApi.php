@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Get input data
-    $input = json_decode(file_get_contents('php://input'), true);
+    $input = json_decode(file_get_contents('php://input'), true); //this code allows to access JSON format using post req
     $email = $input['email'] ?? null;
     $password = $input['password'] ?? null;
 

@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get input data
     $input = json_decode(file_get_contents('php://input'), true);
 
-    // Assign input data to variables
+    // Assign input data 
     $name = $input['name'] ?? null;
     $lastname = $input['lastname'] ?? null;  
     $email = $input['email'] ?? null;  
@@ -27,10 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         return;
     }
 
-    // Query to check if the email is already registered
+    // check if the email is already registered
     $sql = "SELECT * FROM users WHERE email = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
+    $stmt->bind_param("s", $email);//binds the var email to '?' in sql stmt
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         return;
     }
 
-    // Hash the password before storing it
+    // Hash the password 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Insert the user data into the database

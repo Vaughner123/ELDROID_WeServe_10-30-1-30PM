@@ -14,10 +14,10 @@ if ($conn->connect_error) {
 // Set the allowed file types
 $allowedFileTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
-// Directory where the uploaded photos will be save
-$uploadDir = 'post-images/'; 
+// Directory where the uploaded photos will be saved
+$uploadDir = 'post-images/';
 
-// Check if the 'file' input is present in the form submission
+// Route for posting a new post with a comment
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file']) && isset($_POST['title']) && isset($_POST['content']) && isset($_POST['comment'])) {
     
     // Get the uploaded file information
@@ -39,14 +39,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file']) && isset($_P
     if (in_array($fileType, $allowedFileTypes)) {
         // Check if there was any error during the upload
         if ($file['error'] === UPLOAD_ERR_OK) {
-            // Ensure the upload directory exists
+            // Ensure directory exists
             if (!file_exists($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }
 
-            // Move the uploaded file to the desired directory
+            // Move the uploaded file to the directory
             if (move_uploaded_file($fileTmpName, $uploadDir . $uniqueFileName)) {
-                // Insert file and post details into the database
+                // Insert details into the database
                 $fileUrl = $uploadDir . $uniqueFileName;
                 $stmt = $conn->prepare("INSERT INTO `addPost` (title, content, comment, file_name, file_type, file_size, file_url) VALUES (?, ?, ?, ?, ?, ?, ?)");
                 $stmt->bind_param("ssssiss", $title, $content, $comment, $fileName, $fileType, $fileSize, $fileUrl);
@@ -85,12 +85,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file']) && isset($_P
             'message' => 'Invalid file type. Only JPEG, PNG, and GIF files are allowed.'
         ]);
     }
-} else {
-    echo json_encode([
-        'status' => 'error',
-        'message' => 'No file uploaded or required fields (title, content, comment) are missing or wrong request method.'
-    ]);
 }
+
+// Routing comments 
+elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) { //check if request meth is get and id is naa sa query string
+    $id = $_GET['id'];
+
+    // Retrieve comments 
+    $stmt = $conn->prepare("SELECT * FROM `addPost` WHERE `id` = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $comments = [];
+    while ($row = $result->fetch_assoc()) {
+        $comments[] = $row;
+    }
+
+    if (count($comments) > 0) {
+        echo json_encode([
+            'status' => 'success',
+            'comments' => $comments
+        ]);
+    } else {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'No comments found for this post.'
+        ]);
+    }
+
+    $stmt->close();
+}
+
+// Route for posting a new comment
+// elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id']) && isset($_POST['author']) && isset($_POST['comment'])) {
+//     $id = $_POST['id'];
+//     $author = $_POST['author'];
+//     $comment_content = $_POST['comment'];
+
+//     // Insert the comment into the database
+//     $stmt = $conn->prepare("INSERT INTO `comments` (id, author, comment) VALUES (?, ?, ?)");
+//     $stmt->bind_param("iss", $id, $author, $comment_content);
+    
+//     if ($stmt->execute()) {
+//         echo json_encode([
+//             'status' => 'success',
+//             'message' => 'Comment added successfully.'
+//         ]);
+//     } else {
+//         echo json_encode([
+//             'status' => 'error',
+//             'message' => 'Failed to add comment.'
+//         ]);
+//     }
+//     $stmt->close();
+// } else {
+//     echo json_encode([
+//         'status' => 'error',
+//         'message' => 'Invalid request method or missing parameters.'
+//     ]);
+// }
 
 $conn->close();
 ?>
